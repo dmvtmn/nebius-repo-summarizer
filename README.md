@@ -40,7 +40,7 @@ You can also use the interactive docs at http://localhost:8000/docs
 
 ## Model Choice
 
-meta-llama/Meta-Llama-3.1-70B-Instruct via Nebius Token Factory — strong instruction following with OpenAI-compatible API, cost-efficient for structured JSON extraction tasks.
+meta-llama/Llama-3.3-70B-Instruct-fast via Nebius Token Factory — latest Llama 3.3 generation with strong instruction following, optimized for low-latency inference, cost-efficient for structured JSON extraction tasks.
 
 ## Context Strategy
 
