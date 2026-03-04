@@ -1,4 +1,5 @@
 import os
+import json
 from openai import AsyncOpenAI
 from pydantic import BaseModel
 
@@ -22,13 +23,14 @@ async def summarize_with_llm(context: str) -> RepoSummary:
         base_url="https://api.studio.nebius.com/v1/",
         api_key=os.getenv("NEBIUS_API_KEY")
     )
-    response = await client.beta.chat.completions.parse(
+    response = await client.chat.completions.create(
         model="meta-llama/Meta-Llama-3.1-70B-Instruct",
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": USER_PROMPT_TEMPLATE.format(context=context)}
         ],
-        response_format=RepoSummary,
+        response_format={"type": "json_object"},
         temperature=0.2
     )
-    return response.choices[0].message.parsed
+    raw = response.choices[0].message.content
+    return RepoSummary(**json.loads(raw))
