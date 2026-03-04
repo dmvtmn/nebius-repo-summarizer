@@ -17,7 +17,7 @@ def test_cache_ttl_expiry():
     url = "https://github.com/a/b"
     set(url, "my_value")
 
-    with patch("time.time", return_value=time.time() + TTL_SECONDS + 1):
+    with patch("app.cache.time.time", return_value=time.time() + TTL_SECONDS + 1):
         assert get(url) is None
 
 def test_cache_key_normalizes_url():

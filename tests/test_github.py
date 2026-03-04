@@ -8,8 +8,7 @@ def test_should_skip_binary_extensions():
 
 def test_should_skip_lock_files():
     assert should_skip("yarn.lock") is True
-    assert should_skip("package-lock.json") is False  # package-lock.json doesn't match .lock suffix. Wait, .lock is in SKIP_EXTENSIONS.
-    # Actually wait let's check what app.github does: `.suffix.lower() in SKIP_EXTENSIONS` so only if it ends with .lock
+    assert should_skip("package-lock.json") is False  # .json suffix, not .lock — correctly not skipped
     assert should_skip("Cargo.lock") is True
 
 def test_should_skip_node_modules():
