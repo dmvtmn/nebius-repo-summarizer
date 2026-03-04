@@ -8,7 +8,7 @@ class RepoSummary(BaseModel):
     technologies: list[str]
     structure: str
 
-SYSTEM_PROMPT = "You are a senior software engineer. Analyze the provided repository files and return a structured JSON summary."
+SYSTEM_PROMPT = "You are an experienced software engineer. Given a set of repository files, return a JSON object summarising what the project does, what technologies it uses, and how it's structured."
 
 USER_PROMPT_TEMPLATE = """Analyze this GitHub repository and provide:
 1. summary: 2-4 sentence description of what the project does and its purpose

@@ -28,6 +28,7 @@ def should_skip(path: str) -> bool:
     return False
 
 def prioritize_files(blobs: list[dict]) -> list[str]:
+    # p1=readme, p2=manifests, p3=source files, p4=CI workflows
     p1, p2, p3, p4 = [], [], [], []
     for item in blobs:
         if item["type"] != "blob":

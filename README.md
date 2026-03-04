@@ -34,17 +34,19 @@ The server starts at http://localhost:8000
 
    curl -X POST http://localhost:8000/summarize \
      -H "Content-Type: application/json" \
-     -d '{"github_url": "https://github.com/psf/requests"}'
+     -d '{"github_url": "https://github.com/nebius/token-factory-cookbook"}'
 
 You can also use the interactive docs at http://localhost:8000/docs
 
 ## Model Choice
 
-meta-llama/Llama-3.3-70B-Instruct-fast via Nebius Token Factory — latest Llama 3.3 generation with strong instruction following, optimized for low-latency inference, cost-efficient for structured JSON extraction tasks.
+I went with meta-llama/Llama-3.3-70B-Instruct-fast via Nebius Token Factory. It handles structured JSON output reliably and the -fast variant keeps latency reasonable for a synchronous API call. Good balance between quality and cost for this use case.
+
 
 ## Context Strategy
 
-Files are selected by priority: README first, then config/manifest files (pyproject.toml, package.json, etc.), then root-level source files, then CI workflows. Binary files, lock files, and dependency directories (node_modules, dist, .venv) are skipped. Each file is capped at 3,000 characters with a total budget of 15,000 characters, filled greedily in priority order. The directory tree is always prepended to give the LLM structural context.
+Not all files are worth sending to the LLM. The approach here is to prioritize the README and manifest files (pyproject.toml, package.json, etc.) since they give the most signal about what a project does. Root-level source files and CI workflows come next. Binaries, lock files, and noise directories like node_modules are skipped entirely. Each file is capped at 3,000 chars and the total context stays under 15,000 — the directory tree is always included at the top so the model gets structural context even when files are trimmed.
+
 
 ## Configuration
 
