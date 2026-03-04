@@ -30,6 +30,11 @@ A FastAPI service that takes a GitHub repository URL and returns a human-readabl
 
 The server starts at http://localhost:8000
 
+To run the test suite:
+
+    ./tests/run_tests.sh
+
+
 ## Deploy
 
 The service is deployed on Google Cloud Run:
@@ -43,15 +48,38 @@ The service is deployed on Google Cloud Run:
       --timeout 60 \
       --memory 512Mi
 
+in the cloud Run service, Secrets are stored in GCP Secret Manager and injected at runtime — no `.env` file needed in production:
+
+    echo -n "your_key" | gcloud secrets create NEBIUS_API_KEY --data-file=-
+    echo -n "your_token" | gcloud secrets create GITHUB_TOKEN --data-file=-
+
 Live endpoint: https://nebius-summarizer-1049666708441.europe-west1.run.app/summarize
 
 ## Test
 
-   curl -X POST http://localhost:8000/summarize \
-     -H "Content-Type: application/json" \
-     -d '{"github_url": "https://github.com/nebius/token-factory-cookbook"}'
+**Local:**
+
+    curl -X POST http://localhost:8000/summarize \
+      -H "Content-Type: application/json" \
+      -d '{"github_url": "https://github.com/nebius/token-factory-cookbook"}'
 
 You can also use the interactive docs at http://localhost:8000/docs
+
+**Live (Cloud Run):**
+
+    curl -X POST https://nebius-summarizer-1049666708441.europe-west1.run.app/summarize \
+      -H "Content-Type: application/json" \
+      -d '{"github_url": "https://github.com/nebius/token-factory-cookbook"}'
+
+Interactive docs: https://nebius-summarizer-1049666708441.europe-west1.run.app/docs
+
+Expected response:
+
+    {
+      "summary": "...",
+      "technologies": ["Python", "..."],
+      "structure": "..."
+    }
 
 ## Model Choice
 
