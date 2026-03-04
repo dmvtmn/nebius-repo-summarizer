@@ -24,7 +24,7 @@ async def summarize_with_llm(context: str) -> RepoSummary:
         api_key=os.getenv("NEBIUS_API_KEY")
     )
     response = await client.chat.completions.create(
-        model="meta-llama/Meta-Llama-3.1-70B-Instruct",
+        model="meta-llama/Llama-3.3-70B-Instruct-fast",
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": USER_PROMPT_TEMPLATE.format(context=context)}
