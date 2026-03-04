@@ -30,6 +30,21 @@ A FastAPI service that takes a GitHub repository URL and returns a human-readabl
 
 The server starts at http://localhost:8000
 
+## Deploy
+
+The service is deployed on Google Cloud Run:
+
+    gcloud run deploy nebius-summarizer \
+      --source . \
+      --region europe-west1 \
+      --allow-unauthenticated \
+      --set-secrets NEBIUS_API_KEY=NEBIUS_API_KEY:latest \
+      --set-secrets GITHUB_TOKEN=GITHUB_TOKEN:latest \
+      --timeout 60 \
+      --memory 512Mi
+
+Live endpoint: https://nebius-summarizer-1049666708441.europe-west1.run.app/summarize
+
 ## Test
 
    curl -X POST http://localhost:8000/summarize \
