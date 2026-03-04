@@ -9,7 +9,7 @@ A FastAPI service that takes a GitHub repository URL and returns a human-readabl
 ## Setup
 
 1. Clone the repository:
-   git clone https://github.com/YOUR_USERNAME/nebius-repo-summarizer.git
+   git clone https://github.com/dmvtmn/nebius-repo-summarizer.git
    cd nebius-repo-summarizer
 
 2. Create and activate a virtual environment:
